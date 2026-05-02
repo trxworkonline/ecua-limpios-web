@@ -27,7 +27,7 @@
         a { text-decoration: none; color: inherit; }
         button { cursor: pointer; font-family: inherit; border: none; background: none; }
         h1, h2, h3 { line-height: 1.15; color: var(--primary); }
-        .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1120px; margin: 0 auto; padding: 0; }
 
         /* SCROLL REVEAL */
         .reveal {
@@ -127,15 +127,8 @@
             width: 300px; height: 300px;
             background: radial-gradient(circle, rgba(46,204,113,0.15) 0%, transparent 70%);
         }
-        .hero__bg-scene { position: absolute; inset: 0; pointer-events: none; opacity: 0.11; }
-        .hero__bg-scene svg { width: 100%; height: 100%; }
         .hero__center-icon { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-        .hero__center-icon svg { opacity: 1; }
-        .bubble { animation: bubbleFloat var(--dur, 5s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
-        @keyframes bubbleFloat {
-            0%,100% { transform: translateY(0px); }
-            50% { transform: translateY(var(--lift, -8px)); }
-        }
+        .hero__center-icon svg { opacity: 0.05; }
         .hero__badge {
             position: relative; z-index: 2; margin: 24px;
             background: var(--white); border-radius: 14px; padding: 16px 20px;
@@ -145,21 +138,26 @@
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         .badge__row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
         .badge__stars { color: var(--accent); font-size: 13px; letter-spacing: 1px; }
-        .badge__text { font-size: 13px; font-weight: 700; color: var(--dark); }
+        .badge__text { font-size: 13px; font-weight: 700; color: var(--dark); flex: 1; min-width: 0; }
         .badge__dots { display: flex; }
         .badge__dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--white); margin-left: -8px; }
         .badge__dot:first-child { margin-left: 0; }
         .badge__sub { font-size: 11px; color: var(--muted); margin-top: 6px; font-weight: 600; }
 
         @media (max-width: 768px) {
-            .hero__grid { grid-template-columns: 1fr; }
-            .hero__visual { height: 260px; }
-            .hero__center-icon svg { width: 140px; height: 140px; }
+            .hero { padding: 100px 20px 60px; }
+            .hero__grid { grid-template-columns: 1fr; gap: 32px; }
+            .hero__visual { height: 220px; }
+            .hero__center-icon svg { width: 120px; height: 120px; }
         }
 
         /* ── SECTION SHARED ── */
         .sec { padding: 88px 20px; }
-        @media (max-width: 768px) { .sec { padding: 60px 20px; } }
+        @media (max-width: 768px) {
+            .sec { padding: 60px 20px; }
+            .services__head, .why__head, .process__head, .faq__head { margin-bottom: 36px; }
+            .stats__grid { margin-bottom: 40px; }
+        }
         .sec-label {
             display: inline-block; font-size: 12px; font-weight: 700;
             letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; margin-bottom: 10px;
@@ -174,181 +172,77 @@
         @media (max-width: 960px) { .services__grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 560px) { .services__grid { grid-template-columns: 1fr; } }
         .svc-card {
-            --gx: 50%; --gy: -20%;
-            background-color: var(--white);
-            background-image: radial-gradient(circle at var(--gx) var(--gy), rgba(46,204,113,0.07) 0%, transparent 60%);
-            border-radius: 14px;
+            background: var(--white); border-radius: 14px;
             border: 1px solid var(--gray); border-top: 3px solid transparent;
-            padding: 28px 24px; position: relative; overflow: hidden;
-            transition: transform 0.35s var(--ease), box-shadow 0.35s ease, border-top-color 0.3s ease, background-image 0.3s ease;
+            padding: 28px 24px;
+            transition: transform 0.35s var(--ease), box-shadow 0.35s ease, border-top-color 0.3s ease;
         }
-        .svc-card::after {
-            content: ''; position: absolute;
-            top: 0; left: -80%; width: 55%; height: 100%;
-            background: linear-gradient(118deg, transparent 20%, rgba(255,255,255,0.58) 50%, transparent 80%);
-            transform: skewX(-18deg); pointer-events: none;
-        }
-        .svc-card:hover::after { animation: svcShine 0.62s ease forwards; }
-        .svc-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.09), 0 0 0 1.5px rgba(46,204,113,0.28), 0 0 30px rgba(46,204,113,0.09);
-            border-top-color: var(--accent);
-            background-image: radial-gradient(circle at var(--gx) var(--gy), rgba(46,204,113,0.11) 0%, transparent 58%);
-        }
+        .svc-card:hover { transform: translateY(-5px); box-shadow: 0 16px 32px rgba(0,0,0,0.07); border-top-color: var(--accent); }
         .svc-icon {
             width: 48px; height: 48px; background: rgba(13,59,110,0.05);
             border-radius: 10px; display: flex; align-items: center; justify-content: center;
             color: var(--primary); margin-bottom: 18px;
-            transition: transform 0.4s var(--ease), background 0.3s ease;
-        }
-        .svc-card:hover .svc-icon {
-            background: rgba(46,204,113,0.11);
-            animation: dropBounce 0.52s var(--ease) forwards;
         }
         .svc-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
         .svc-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
-        @keyframes svcShine {
-            from { left: -80%; }
-            to   { left: 130%; }
-        }
-        @keyframes dropBounce {
-            0%   { transform: scale(1)    rotate(0deg)   translateY(0); }
-            32%  { transform: scale(1.2)  rotate(-6deg)  translateY(-5px); }
-            55%  { transform: scale(0.93) rotate(-2deg)  translateY(2px); }
-            75%  { transform: scale(1.07) rotate(-5deg)  translateY(-2px); }
-            100% { transform: scale(1.04) rotate(-4deg)  translateY(0); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .svc-card::after, .svc-card:hover .svc-icon { animation: none; }
-            .svc-card:hover { transform: translateY(-3px); }
-        }
 
         /* ── WHY US ── */
         .why { background: var(--dark); padding: 88px 20px; position: relative; overflow: hidden; }
-        .why__bg-scene { position: absolute; inset: 0; opacity: 0.08; pointer-events: none; z-index: 0; }
-        .why__bg-scene svg { width: 100%; height: 100%; }
         .why::before {
-            content: ''; position: absolute; inset: 0; z-index: 0;
+            content: ''; position: absolute; inset: 0;
             background:
                 radial-gradient(circle at 80% 15%, rgba(46,204,113,0.09) 0%, transparent 50%),
                 radial-gradient(circle at 15% 85%, rgba(13,59,110,0.5) 0%, transparent 50%);
         }
         .why::after {
-            content: ''; position: absolute; inset: 0; z-index: 0;
+            content: ''; position: absolute; inset: 0;
             background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
             background-size: 28px 28px;
         }
         @media (max-width: 768px) { .why { padding: 60px 20px; } }
-        .why__inner {
-            position: relative; z-index: 1; max-width: 1120px; margin: 0 auto;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
-        }
-        @media (max-width: 860px) { .why__inner { grid-template-columns: 1fr; gap: 40px; } }
-        .why__left .sec-title { color: var(--white); }
-        .why__left .sec-sub { color: rgba(255,255,255,0.6); }
-        .why__dots { display: flex; gap: 10px; margin-top: 32px; align-items: center; }
-        .why__dot {
-            height: 10px; border-radius: 100px; border: none; cursor: pointer; padding: 0;
-            background: rgba(255,255,255,0.25); transition: all 0.35s var(--ease); width: 10px;
-        }
-        .why__dot.active { width: 38px; background: var(--accent); }
-        .why__right { position: relative; min-height: 300px; }
-        .why__deco { position: absolute; width: 88px; height: 88px; border-radius: 14px; background: rgba(46,204,113,0.05); pointer-events: none; }
-        .why__deco-tl { top: -18px; right: -18px; }
-        .why__deco-br { bottom: -18px; left: -18px; }
+        .why__inner { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; }
+        .why__head { text-align: center; margin-bottom: 52px; }
+        .why__head .sec-title { color: var(--white); }
+        .why__head .sec-sub { color: rgba(255,255,255,0.6); margin: 0 auto; }
+        .why__cards { display: flex; flex-direction: column; gap: 16px; max-width: 720px; margin: 0 auto; }
         .why-card {
-            position: absolute; inset: 0;
-            display: flex; flex-direction: column; gap: 18px;
-            border-radius: 20px; padding: 36px;
-            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-            opacity: 0; transform: translateX(52px) scale(0.96);
-            transition: opacity 0.48s var(--ease), transform 0.48s var(--ease);
-            pointer-events: none; overflow: hidden; --gx: 50%; --gy: 50%;
+            display: flex; gap: 24px; align-items: center;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px; padding: 28px;
         }
-        .why-card.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
-        .why-card::before {
-            content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-            background: radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,0.07) 0%, transparent 60%);
-        }
-        .why-card::after {
-            content: ''; position: absolute; top: 0; left: -80%; width: 55%; height: 100%;
-            background: linear-gradient(118deg, transparent 20%, rgba(255,255,255,0.18) 50%, transparent 80%);
-            transform: skewX(-18deg); pointer-events: none;
-        }
-        .why-card:hover::after { animation: svcShine 0.62s ease forwards; }
-        /* Card verde — fondo acento, texto e icono azul oscuro */
-        .why-card--green { background: var(--accent); border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 12px 40px rgba(46,204,113,0.35); }
-        .why-card--green h3 { color: #0D3B6E; }
-        .why-card--green p  { color: rgba(13,59,110,0.78); }
-        .why-card--green .why-card__ico { background: rgba(13,59,110,0.14); color: #0D3B6E; }
-        .why-card--green .why-card__badge { background: rgba(13,59,110,0.1); border-color: rgba(13,59,110,0.2); color: #0D3B6E; }
-        /* Card azul — fondo primario, texto e icono blanco/verde */
-        .why-card--blue { background: var(--primary); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 12px 40px rgba(13,59,110,0.55); }
-        .why-card--blue h3 { color: var(--white); }
-        .why-card--blue p  { color: rgba(255,255,255,0.72); }
-        .why-card--blue .why-card__ico { background: rgba(46,204,113,0.22); color: var(--accent); box-shadow: 0 0 20px rgba(46,204,113,0.2); }
-        .why-card--blue .why-card__badge { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.88); }
-        /* Card blanca — fondo blanco, texto azul, icono verde acento */
-        .why-card--white { background: var(--white); border: 1px solid var(--gray); box-shadow: 0 12px 40px rgba(0,0,0,0.18); }
-        .why-card--white h3 { color: var(--primary); }
-        .why-card--white p  { color: var(--muted); }
-        .why-card--white .why-card__ico { background: rgba(46,204,113,0.1); color: var(--accent); }
-        .why-card--white .why-card__badge { background: rgba(13,59,110,0.05); border-color: var(--gray); color: var(--muted); }
         .why-card__ico {
-            width: 58px; height: 58px; border-radius: 14px; flex-shrink: 0;
+            flex-shrink: 0; width: 56px; height: 56px;
+            background: var(--accent); border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            transition: transform 0.4s var(--ease);
+            box-shadow: 0 0 24px rgba(46,204,113,0.28);
         }
-        .why-card:hover .why-card__ico { animation: dropBounce 0.52s var(--ease) forwards; }
-        .why-card h3 { font-size: 20px; font-weight: 700; line-height: 1.25; }
-        .why-card p  { font-size: 15px; line-height: 1.7; flex: 1; }
-        .why-card__badge {
-            display: inline-flex; align-items: center; gap: 7px; align-self: flex-start;
-            border-radius: 100px; padding: 7px 14px;
-            font-size: 13px; font-weight: 600;
-        }
-        @media (max-width: 860px) {
-            .why__right { min-height: 260px; }
-            .why-card { padding: 28px; }
-        }
+        .why-card h3 { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+        .why-card p { font-size: 14px; color: rgba(255,255,255,0.68); line-height: 1.65; }
+        @media (max-width: 560px) { .why-card { flex-direction: column; gap: 16px; align-items: flex-start; } }
 
         /* ── STATS + TESTIMONIALS ── */
-        .stats { padding: 88px 20px; background: var(--bg); }
+        .stats { padding: 88px 20px; background: var(--white); }
         @media (max-width: 768px) { .stats { padding: 60px 20px; } }
-        .stats__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 72px; }
-        @media (max-width: 560px) { .stats__grid { grid-template-columns: 1fr; gap: 16px; } }
-        .stat-item {
-            background: var(--white); border-radius: 16px; padding: 32px 24px; text-align: center;
-            border-top: 3px solid var(--accent); box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-        }
+        .stats__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-bottom: 64px; text-align: center; }
+        @media (max-width: 560px) { .stats__grid { grid-template-columns: 1fr; gap: 28px; } }
         .stat__num { font-size: clamp(44px, 6vw, 60px); font-weight: 800; color: var(--accent); display: block; line-height: 1; }
-        .stat__lbl { font-size: 14px; font-weight: 700; color: var(--primary); margin-top: 8px; display: block; }
-        .tests__head { text-align: center; margin-bottom: 40px; }
-        /* Marquee */
-        .tests__marquee { overflow: hidden; position: relative; }
-        .tests__marquee::before, .tests__marquee::after {
-            content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
-        }
-        .tests__marquee::before { left:  0; background: linear-gradient(to right, var(--bg), transparent); }
-        .tests__marquee::after  { right: 0; background: linear-gradient(to left,  var(--bg), transparent); }
-        .tests__row { display: flex; gap: 20px; width: max-content; }
-        .tests__row--fwd { animation: marqueeLeft 36s linear infinite; padding-bottom: 10px; }
-        .tests__row--rev { animation: marqueeLeft 30s linear infinite reverse; padding-top: 10px; }
-        @keyframes marqueeLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        .tests__marquee:hover .tests__row { animation-play-state: paused; }
+        .stat__lbl { font-size: 15px; font-weight: 600; color: var(--muted); margin-top: 6px; display: block; }
+        .tests__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        @media (max-width: 640px) { .tests__grid { grid-template-columns: 1fr; } }
         .test-card {
             background: var(--white); border: 1px solid var(--gray);
-            border-radius: 14px; padding: 24px 26px; position: relative;
-            box-shadow: 0 2px 14px rgba(0,0,0,0.05); width: 300px; flex-shrink: 0;
+            border-radius: 14px; padding: 28px; position: relative;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
         }
         .test-card::before {
-            content: '\201C'; position: absolute; top: 14px; left: 18px;
-            font-size: 64px; color: var(--accent); opacity: 0.12;
+            content: '\201C'; position: absolute; top: 16px; left: 20px;
+            font-size: 72px; color: var(--accent); opacity: 0.12;
             font-family: Georgia, serif; line-height: 1;
         }
-        .test-card p { font-style: italic; font-size: 14px; color: var(--muted); margin-bottom: 16px; line-height: 1.7; }
-        .test-card strong { font-size: 13px; font-weight: 700; color: var(--dark); display: block; }
-        .test-card__role { font-size: 12px; color: var(--accent); font-weight: 600; display: block; margin-top: 3px; }
+        .test-card p { font-style: italic; font-size: 15px; color: var(--muted); margin-bottom: 20px; line-height: 1.7; }
+        .test-card strong { font-size: 13px; font-weight: 700; color: var(--dark); }
 
         /* ── PROCESS ── */
         .process { background: var(--bg); padding: 88px 20px; text-align: center; }
@@ -435,38 +329,13 @@
         .acc-item.open .acc-body { max-height: 200px; }
         .acc-body p { font-size: 15px; color: var(--muted); padding-bottom: 22px; line-height: 1.7; }
 
-        /* ── CTA FINAL ── */
-        .cta-final { background: var(--primary); padding: 84px 20px; position: relative; overflow: hidden; }
-        .cta-final::before {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle at 15% 50%, rgba(46,204,113,0.13) 0%, transparent 55%),
-                        radial-gradient(circle at 85% 50%, rgba(255,255,255,0.04) 0%, transparent 50%);
-        }
-        .cta-final__inner {
-            position: relative; z-index: 1; max-width: 860px; margin: 0 auto;
-            display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px;
-        }
-        .cta-final__inner h2 { font-size: clamp(26px, 3.8vw, 42px); font-weight: 800; color: var(--white); line-height: 1.2; }
-        .cta-final__inner h2 span { color: var(--accent); }
-        .cta-final__inner p { font-size: 17px; color: rgba(255,255,255,0.62); max-width: 460px; }
-        .cta-final__btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
-        .cta-btn {
-            display: inline-flex; align-items: center; gap: 9px;
-            padding: 15px 26px; border-radius: 10px; font-size: 15px; font-weight: 700;
-            transition: transform 0.2s var(--ease), filter 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-        }
-        .cta-btn:hover { transform: translateY(-2px); }
-        .cta-btn--quote  { background: var(--accent); color: #0D3B6E; box-shadow: 0 6px 24px rgba(46,204,113,0.38); }
-        .cta-btn--quote:hover  { filter: brightness(1.06); box-shadow: 0 10px 32px rgba(46,204,113,0.5); }
-        .cta-btn--ghost  { background: rgba(255,255,255,0.09); color: var(--white); border: 1.5px solid rgba(255,255,255,0.22); }
-        .cta-btn--ghost:hover  { background: rgba(255,255,255,0.16); }
-        @media (max-width: 560px) { .cta-final__btns { flex-direction: column; align-items: stretch; } .cta-btn { justify-content: center; } }
-
         /* ── FOOTER ── */
         .footer { background: var(--dark); color: var(--white); padding: 80px 20px 40px; }
         .footer__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-bottom: 56px; }
-        @media (max-width: 768px) { .footer__grid { grid-template-columns: 1fr; gap: 36px; } }
+        @media (max-width: 768px) {
+            .footer { padding: 60px 20px 40px; }
+            .footer__grid { grid-template-columns: 1fr; gap: 32px; margin-bottom: 40px; }
+        }
         .footer__logo { font-size: 22px; font-weight: 800; margin-bottom: 12px; }
         .footer__slogan { font-size: 14px; opacity: 0.7; margin-bottom: 16px; }
         .footer__addr { font-size: 13px; opacity: 0.5; line-height: 1.65; }
@@ -565,84 +434,9 @@
             <div class="hero__dots"></div>
             <div class="hero__lines"></div>
             <div class="hero__glow"></div>
-            <div class="hero__bg-scene">
-                <svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-                    <g fill="white">
-                        <rect x="0" y="322" width="34" height="198"/>
-                        <rect x="28" y="242" width="114" height="278"/>
-                        <rect x="145" y="68" width="230" height="392"/>
-                        <rect x="193" y="48" width="134" height="22" rx="2"/>
-                        <rect x="228" y="28" width="64" height="22" rx="2"/>
-                        <rect x="383" y="192" width="112" height="268"/>
-                        <rect x="483" y="342" width="37" height="118"/>
-                        <rect x="0" y="458" width="520" height="62"/>
-                    </g>
-                    <g stroke="white" stroke-linecap="round">
-                        <line x1="472" y1="50" x2="472" y2="94" stroke-width="5"/>
-                        <line x1="450" y1="72" x2="494" y2="72" stroke-width="5"/>
-                        <line x1="458" y1="58" x2="486" y2="86" stroke-width="3"/>
-                        <line x1="486" y1="58" x2="458" y2="86" stroke-width="3"/>
-                        <line x1="16" y1="158" x2="16" y2="192" stroke-width="3.5"/>
-                        <line x1="0" y1="175" x2="32" y2="175" stroke-width="3.5"/>
-                        <line x1="5" y1="163" x2="27" y2="187" stroke-width="2"/>
-                        <line x1="27" y1="163" x2="5" y2="187" stroke-width="2"/>
-                    </g>
-                </svg>
-            </div>
             <div class="hero__center-icon">
-                <svg width="270" height="310" viewBox="0 0 270 310" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <radialGradient id="b1" cx="36%" cy="30%" r="62%">
-                            <stop offset="0%" stop-color="#C8E8F8" stop-opacity="0.92"/>
-                            <stop offset="45%" stop-color="#4A9FD4" stop-opacity="0.62"/>
-                            <stop offset="100%" stop-color="#0A2E55" stop-opacity="0.88"/>
-                        </radialGradient>
-                        <radialGradient id="b2" cx="36%" cy="30%" r="62%">
-                            <stop offset="0%" stop-color="#D4F1FF" stop-opacity="0.88"/>
-                            <stop offset="45%" stop-color="#6BB8E8" stop-opacity="0.55"/>
-                            <stop offset="100%" stop-color="#123050" stop-opacity="0.85"/>
-                        </radialGradient>
-                        <radialGradient id="b3" cx="36%" cy="30%" r="62%">
-                            <stop offset="0%" stop-color="#B8E4FF" stop-opacity="0.9"/>
-                            <stop offset="45%" stop-color="#2980B9" stop-opacity="0.65"/>
-                            <stop offset="100%" stop-color="#0D3B6E" stop-opacity="0.88"/>
-                        </radialGradient>
-                    </defs>
-
-                    <!-- Burbuja pequeña izquierda -->
-                    <g class="bubble" style="--dur:6s;--delay:0.8s;--lift:-6px">
-                        <circle cx="40" cy="108" r="14" fill="url(#b3)" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
-                        <ellipse cx="34" cy="101" rx="4" ry="2.5" fill="white" opacity="0.32" transform="rotate(-20 34 101)"/>
-                    </g>
-
-                    <!-- Burbuja mediana inferior izquierda -->
-                    <g class="bubble" style="--dur:7s;--delay:1.4s;--lift:-7px">
-                        <circle cx="58" cy="196" r="21" fill="url(#b2)" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"/>
-                        <ellipse cx="49" cy="186" rx="5.5" ry="3.5" fill="white" opacity="0.3" transform="rotate(-20 49 186)"/>
-                    </g>
-
-                    <!-- Burbuja principal (grande) -->
-                    <g class="bubble" style="--dur:5s;--delay:0s;--lift:-9px">
-                        <circle cx="128" cy="118" r="90" fill="url(#b1)" stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
-                        <ellipse cx="93" cy="80" rx="29" ry="18" fill="white" opacity="0.26" transform="rotate(-22 93 80)"/>
-                        <circle cx="160" cy="155" r="7" fill="white" opacity="0.1"/>
-                    </g>
-
-                    <!-- Burbuja mediana superior derecha -->
-                    <g class="bubble" style="--dur:6.5s;--delay:0.5s;--lift:-8px">
-                        <circle cx="210" cy="70" r="48" fill="url(#b2)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-                        <ellipse cx="192" cy="53" rx="13" ry="8" fill="white" opacity="0.28" transform="rotate(-22 192 53)"/>
-                    </g>
-
-                    <!-- Burbuja pequeña inferior derecha -->
-                    <g class="bubble" style="--dur:5.5s;--delay:1s;--lift:-6px">
-                        <circle cx="212" cy="182" r="31" fill="url(#b3)" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
-                        <ellipse cx="200" cy="169" rx="8.5" ry="5.5" fill="white" opacity="0.28" transform="rotate(-22 200 169)"/>
-                    </g>
-
-                    <!-- Nombre empresa -->
-                    <text x="135" y="240" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="800" font-size="25" fill="white">Ecua-Limpios</text>
-                    <text x="135" y="258" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="600" font-size="10" fill="rgba(255,255,255,0.55)" letter-spacing="3">LIMPIEZA PROFESIONAL</text>
+                <svg width="220" height="220" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.8">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
                 </svg>
             </div>
             <div class="hero__badge">
@@ -677,7 +471,7 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 7v14M21 7v14M9 21V11M15 21V11M5 7l7-4 7 4"/></svg>
                 </div>
                 <h3>Aseo Corporativo</h3>
-                <p>Mantención de oficinas con altos estándares de higiene y discreción.</p>
+                <p>Mantención de oficinas con altos estándares de higiene y discrección.</p>
             </div>
             <div class="svc-card reveal d2">
                 <div class="svc-icon">
@@ -720,69 +514,39 @@
 
 <!-- WHY US -->
 <section class="why" id="why">
-    <div class="why__bg-scene">
-        <svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-            <g fill="white">
-                <rect x="0" y="322" width="34" height="198"/><rect x="28" y="242" width="114" height="278"/>
-                <rect x="145" y="68" width="230" height="392"/><rect x="193" y="48" width="134" height="22" rx="2"/>
-                <rect x="228" y="28" width="64" height="22" rx="2"/><rect x="383" y="192" width="112" height="268"/>
-                <rect x="483" y="342" width="37" height="118"/><rect x="0" y="458" width="520" height="62"/>
-            </g>
-            <g stroke="white" stroke-linecap="round">
-                <line x1="472" y1="50" x2="472" y2="94" stroke-width="5"/><line x1="450" y1="72" x2="494" y2="72" stroke-width="5"/>
-                <line x1="458" y1="58" x2="486" y2="86" stroke-width="3"/><line x1="486" y1="58" x2="458" y2="86" stroke-width="3"/>
-                <line x1="16" y1="158" x2="16" y2="192" stroke-width="3.5"/><line x1="0" y1="175" x2="32" y2="175" stroke-width="3.5"/>
-            </g>
-        </svg>
-    </div>
     <div class="why__inner">
-        <!-- Izquierda: título + dots -->
-        <div class="why__left reveal">
+        <div class="why__head reveal">
             <span class="sec-label">Por qué elegirnos</span>
-            <h2 class="sec-title">Por qué más de 80 empresas<br>nos eligen cada mes</h2>
-            <p class="sec-sub">Tres compromisos que cumplimos en cada faena, sin excepciones.</p>
-            <div class="why__dots">
-                <button class="why__dot active" data-index="0" aria-label="Compromiso 1"></button>
-                <button class="why__dot" data-index="1" aria-label="Compromiso 2"></button>
-                <button class="why__dot" data-index="2" aria-label="Compromiso 3"></button>
-            </div>
+            <h2 class="sec-title" style="color:var(--white)">Por qué más de 80 empresas<br>nos eligen cada mes</h2>
+            <p class="sec-sub" style="color:rgba(255,255,255,0.6);margin:0 auto">Tres compromisos que cumplimos en cada faena, sin excepciones.</p>
         </div>
-        <!-- Derecha: cards animadas -->
-        <div class="why__right reveal d2">
-            <div class="why__deco why__deco-tl"></div>
-            <div class="why__deco why__deco-br"></div>
-            <div class="why-card why-card--green active">
+        <div class="why__cards">
+            <div class="why-card reveal d1">
                 <div class="why-card__ico">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
-                <h3>Personal con seguro de accidentes vigente</h3>
-                <p>El 100% de nuestro equipo opera bajo contrato formal y con coberturas de seguridad al día. Podemos acreditarlo cuando usted lo requiera.</p>
-                <span class="why-card__badge">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    100% del equipo certificado
-                </span>
+                <div>
+                    <h3>Personal con seguro de accidentes vigente</h3>
+                    <p>El 100% de nuestro equipo opera bajo contrato formal y con coberturas de seguridad al día. Podemos acreditarlo cuando lo requiera.</p>
+                </div>
             </div>
-            <div class="why-card why-card--blue">
+            <div class="why-card reveal d2">
                 <div class="why-card__ico">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                 </div>
-                <h3>Supervisión presencial en cada trabajo</h3>
-                <p>Un supervisor dedicado audita cada turno para asegurar que sus expectativas se cumplan al pie de la letra.</p>
-                <span class="why-card__badge">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    Auditoría en cada turno
-                </span>
+                <div>
+                    <h3>Supervisión presencial en cada trabajo</h3>
+                    <p>Un supervisor dedicado audita cada turno para asegurar que sus expectativas se cumplan al pie de la letra.</p>
+                </div>
             </div>
-            <div class="why-card why-card--white">
+            <div class="why-card reveal d3">
                 <div class="why-card__ico">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 </div>
-                <h3>Cotización en menos de 24 horas</h3>
-                <p>Valoramos su tiempo. Respondemos cada solicitud de presupuesto el mismo día hábil con total transparencia.</p>
-                <span class="why-card__badge">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    Respuesta el mismo día hábil
-                </span>
+                <div>
+                    <h3>Cotización en menos de 24 horas</h3>
+                    <p>Valoramos su tiempo. Respondemos cada solicitud de presupuesto el mismo día hábil con total transparencia.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -805,30 +569,14 @@
                 <span class="stat__lbl">Clientes con contrato renovado</span>
             </div>
         </div>
-        <div class="tests__head reveal">
-            <span class="sec-label">Lo que dicen nuestros clientes</span>
-            <h2 class="sec-title">Más de 80 empresas ya confían en nosotros</h2>
-        </div>
-        <div class="tests__marquee">
-            <!-- Fila 1 → izquierda -->
-            <div class="tests__row tests__row--fwd">
-                <div class="test-card"><p>Llevan más de un año con la limpieza de nuestras oficinas y la diferencia es notoria. Puntualidad y discreción en todo momento.</p><strong>Roberto Sánchez</strong><span class="test-card__role">Administrador · Edificio Corporativo</span></div>
-                <div class="test-card"><p>Wena onda el equipo, siempre llegan puntual y dejan to' impecable. Los chiquillos saben lo que hacen, re recomendados.</p><strong>Carlos Díaz</strong><span class="test-card__role">Dueño · Restaurante El Barrio</span></div>
-                <div class="test-card"><p>Contraté el servicio pa' mi local y quedé encantada. Se nota que usan buenos productos y el personal es re ordenado.</p><strong>Andrea Fuentes</strong><span class="test-card__role">Administradora · Boutique Centro</span></div>
-                <!-- duplicado para loop -->
-                <div class="test-card"><p>Llevan más de un año con la limpieza de nuestras oficinas y la diferencia es notoria. Puntualidad y discreción en todo momento.</p><strong>Roberto Sánchez</strong><span class="test-card__role">Administrador · Edificio Corporativo</span></div>
-                <div class="test-card"><p>Wena onda el equipo, siempre llegan puntual y dejan to' impecable. Los chiquillos saben lo que hacen, re recomendados.</p><strong>Carlos Díaz</strong><span class="test-card__role">Dueño · Restaurante El Barrio</span></div>
-                <div class="test-card"><p>Contraté el servicio pa' mi local y quedé encantada. Se nota que usan buenos productos y el personal es re ordenado.</p><strong>Andrea Fuentes</strong><span class="test-card__role">Administradora · Boutique Centro</span></div>
+        <div class="tests__grid">
+            <div class="test-card reveal d1">
+                <p>Llevan más de un año a cargo de la limpieza de nuestras oficinas y la diferencia es notoria. Puntualidad y discrección en todo momento.</p>
+                <strong>Roberto Sánchez · Administrador, Edificio Corporativo Santiago Centro</strong>
             </div>
-            <!-- Fila 2 → derecha (reversa) -->
-            <div class="tests__row tests__row--rev">
-                <div class="test-card"><p>Los contratamos pa' el aseo post-construcción y quedamos tan contentos que firmamos contrato mensual al tiro. Resultados de verdad.</p><strong>Patricia Morales</strong><span class="test-card__role">Directora Administrativa · Notaría</span></div>
-                <div class="test-card"><p>Llevamos harto tiempo con ellos y ni un problema. Los chiquillos son super profesionales y siempre atentos a los detalles.</p><strong>María González</strong><span class="test-card__role">Jefa Administrativa · Clínica Dental</span></div>
-                <div class="test-card"><p>La cotización llegó el mismo día y empezamos esa semana. Todo al tiro y sin vueltas, así me gusta trabajar.</p><strong>Felipe Castro</strong><span class="test-card__role">Gerente · Oficinas Piso 12</span></div>
-                <!-- duplicado para loop -->
-                <div class="test-card"><p>Los contratamos pa' el aseo post-construcción y quedamos tan contentos que firmamos contrato mensual al tiro. Resultados de verdad.</p><strong>Patricia Morales</strong><span class="test-card__role">Directora Administrativa · Notaría</span></div>
-                <div class="test-card"><p>Llevamos harto tiempo con ellos y ni un problema. Los chiquillos son super profesionales y siempre atentos a los detalles.</p><strong>María González</strong><span class="test-card__role">Jefa Administrativa · Clínica Dental</span></div>
-                <div class="test-card"><p>La cotización llegó el mismo día y empezamos esa semana. Todo al tiro y sin vueltas, así me gusta trabajar.</p><strong>Felipe Castro</strong><span class="test-card__role">Gerente · Oficinas Piso 12</span></div>
+            <div class="test-card reveal d2">
+                <p>Los contratamos para el aseo post-construcción de nuestra nueva sucursal y el resultado fue tan bueno que firmamos contrato mensual de inmediato.</p>
+                <strong>Patricia Morales · Directora Administrativa, Notaría Morales y Asociados</strong>
             </div>
         </div>
     </div>
@@ -996,33 +744,6 @@
     </div>
 </section>
 
-<!-- CTA FINAL -->
-<section class="cta-final">
-    <div class="cta-final__inner reveal">
-        <div>
-            <h2>¿Listo para tener espacios <span>impecables</span>?</h2>
-            <p>Escríbenos directo por WhatsApp. Respondemos el mismo día hábil, sin vueltas.</p>
-        </div>
-        <div class="cta-final__btns">
-            <a href="https://wa.me/56998467532?text=Hola%20Ecua-Limpios%2C%20vengo%20de%20su%20web%20y%20me%20gustar%C3%ADa%20solicitar%20una%20cotizaci%C3%B3n%20para%20mis%20instalaciones."
-               target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn--quote">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                Solicitar cotización
-            </a>
-            <a href="https://wa.me/56998467532?text=Hola%20Ecua-Limpios%2C%20vengo%20de%20su%20web%20y%20tengo%20una%20consulta%20sobre%20sus%20servicios%20de%20limpieza."
-               target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn--ghost">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                Hacer una consulta
-            </a>
-            <a href="https://wa.me/56998467532?text=Hola%20Ecua-Limpios%2C%20vengo%20de%20su%20web%20y%20me%20gustar%C3%ADa%20agendar%20una%20visita%20de%20evaluaci%C3%B3n%20gratuita."
-               target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn--ghost">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                Agendar visita gratuita
-            </a>
-        </div>
-    </div>
-</section>
-
 <!-- FOOTER -->
 <footer class="footer">
     <div class="container footer__grid">
@@ -1061,7 +782,7 @@
 </footer>
 
 <!-- WHATSAPP -->
-<a href="https://wa.me/56998467532?text=Hola%20Ecua-Limpios%2C%20vengo%20de%20su%20web%20y%20necesito%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20servicios." target="_blank" rel="noopener noreferrer" class="wa">
+<a href="https://wa.me/56998467532?text=Hola%20Ecua-limpios%2C%20vi%20su%20p%C3%A1gina%20web%20y%20necesito%20una%20cotizaci%C3%B3n." target="_blank" rel="noopener noreferrer" class="wa">
     <span class="wa__tooltip">¿Necesita un presupuesto rápido?</span>
     <div class="wa__btn">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -1159,53 +880,6 @@ function fReset() {
         updateFill();
     }, 400);
 }
-
-// WHY-CARD ANIMATED CAROUSEL
-function initWhy() {
-    const cards = Array.from(document.querySelectorAll('.why-card'));
-    const dots  = Array.from(document.querySelectorAll('.why__dot'));
-    if (!cards.length) return;
-    let active = 0, timer;
-
-    function goTo(index) {
-        cards[active].classList.remove('active');
-        dots[active].classList.remove('active');
-        active = index;
-        cards[active].classList.add('active');
-        dots[active].classList.add('active');
-    }
-
-    function resetTimer() {
-        clearInterval(timer);
-        timer = setInterval(() => goTo((active + 1) % cards.length), 6000);
-    }
-
-    dots.forEach((dot, i) => dot.addEventListener('click', () => { goTo(i); resetTimer(); }));
-    resetTimer();
-}
-initWhy();
-
-// WHY-CARD cursor glow
-document.querySelectorAll('.why-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        card.style.setProperty('--gx', ((e.clientX - r.left) / r.width * 100) + '%');
-        card.style.setProperty('--gy', ((e.clientY - r.top)  / r.height * 100) + '%');
-    });
-});
-
-// SERVICE CARDS — cursor glow
-document.querySelectorAll('.svc-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        card.style.setProperty('--gx', ((e.clientX - r.left) / r.width * 100) + '%');
-        card.style.setProperty('--gy', ((e.clientY - r.top)  / r.height * 100) + '%');
-    });
-    card.addEventListener('mouseleave', () => {
-        card.style.setProperty('--gx', '50%');
-        card.style.setProperty('--gy', '-20%');
-    });
-});
 
 // FAQ ACCORDION
 document.querySelectorAll('.acc-btn').forEach(btn => {
